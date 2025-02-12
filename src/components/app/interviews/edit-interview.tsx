@@ -1,10 +1,47 @@
 import { useState } from "react";
 import { Interview } from "@/types/types";
 import { useInterviewStore } from "@/store/interviewStore";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { CalendarIcon } from "lucide-react";
+import { format, setHours, setMinutes } from "date-fns";
 
 type EditInterviewModalProps = {
   interview: Interview;
   onClose: () => void;
+};
+
+const generateTimeSlots = () => {
+  const slots = [];
+  const startHour = 9; // 9 AM
+  const endHour = 17; // 5 PM
+
+  for (let hour = startHour; hour <= endHour; hour++) {
+    slots.push(format(setHours(setMinutes(new Date(), 0), hour), "HH:mm"));
+    slots.push(format(setHours(setMinutes(new Date(), 30), hour), "HH:mm"));
+  }
+
+  return slots;
 };
 
 const EditInterviewModal = ({
@@ -13,95 +50,149 @@ const EditInterviewModal = ({
 }: EditInterviewModalProps) => {
   const { updateInterview } = useInterviewStore();
   const [updatedInterview, setUpdatedInterview] = useState({ ...interview });
+  const timeSlots = generateTimeSlots();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUpdatedInterview({
       ...updatedInterview,
       [e.target.name]: e.target.value,
     });
   };
 
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      setUpdatedInterview({
+        ...updatedInterview,
+        date: format(date, "yyyy-MM-dd"),
+      });
+    }
+  };
+
+  const handleTypeChange = (value: "Technical" | "HR" | "Behavioral") => {
+    setUpdatedInterview({
+      ...updatedInterview,
+      type: value,
+    });
+  };
+
+  const handleTimeChange = (value: string) => {
+    setUpdatedInterview({
+      ...updatedInterview,
+      time: value,
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formattedTime = updatedInterview.time.padStart(5, "0");
-
-    const finalInterview = {
-      ...updatedInterview,
-      time: formattedTime,
-    };
-
-    updateInterview(finalInterview);
-
-    // small delay before closing to ensure state is updated
-    setTimeout(onClose, 100);
+    updateInterview(updatedInterview);
+    onClose();
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-xl font-bold mb-4">Edit Interview</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="candidate"
-            value={updatedInterview.candidate}
-            onChange={handleChange}
-            className="w-full p-2 mb-2 border rounded"
-            placeholder="Candidate Name"
-          />
-          <input
-            type="text"
-            name="interviewer"
-            value={updatedInterview.interviewer}
-            onChange={handleChange}
-            className="w-full p-2 mb-2 border rounded"
-            placeholder="Interviewer Name"
-          />
-          <input
-            type="date"
-            name="date"
-            value={updatedInterview.date}
-            onChange={handleChange}
-            className="w-full p-2 mb-2 border rounded"
-          />
-          <input
-            type="time"
-            name="time"
-            value={updatedInterview.time}
-            onChange={handleChange}
-            className="w-full p-2 mb-2 border rounded"
-          />
-          <select
-            name="type"
-            value={updatedInterview.type}
-            onChange={handleChange}
-            className="w-full p-2 mb-2 border rounded"
-          >
-            <option value="Technical">Technical</option>
-            <option value="HR">HR</option>
-            <option value="Behavioral">Behavioral</option>
-          </select>
-          <div className="flex justify-between mt-4">
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded"
+    <Dialog open={true} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit Interview</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="candidate">Candidate Name</Label>
+            <Input
+              id="candidate"
+              name="candidate"
+              value={updatedInterview.candidate}
+              onChange={handleChange}
+              placeholder="Enter candidate name"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="interviewer">Interviewer Name</Label>
+            <Input
+              id="interviewer"
+              name="interviewer"
+              value={updatedInterview.interviewer}
+              onChange={handleChange}
+              placeholder="Enter interviewer name"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Date</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start text-left font-normal"
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {updatedInterview.date
+                    ? format(new Date(updatedInterview.date), "PPP")
+                    : "Select date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={
+                    updatedInterview.date
+                      ? new Date(updatedInterview.date)
+                      : undefined
+                  }
+                  onSelect={handleDateSelect}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Time Slot</Label>
+            <Select
+              value={updatedInterview.time}
+              onValueChange={handleTimeChange}
             >
-              Update
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 bg-gray-300 rounded"
+              <SelectTrigger>
+                <SelectValue placeholder="Select time slot" />
+              </SelectTrigger>
+              <SelectContent>
+                {timeSlots.map((slot) => (
+                  <SelectItem key={slot} value={slot}>
+                    {slot}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Interview Type</Label>
+            <Select
+              value={updatedInterview.type}
+              onValueChange={handleTypeChange}
             >
+              <SelectTrigger>
+                <SelectValue placeholder="Select interview type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Technical">Technical</SelectItem>
+                <SelectItem value="HR">HR</SelectItem>
+                <SelectItem value="Behavioral">Behavioral</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex justify-end gap-2">
+            <Button type="button" variant="outline" onClick={onClose}>
               Cancel
-            </button>
+            </Button>
+            <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+              Update
+            </Button>
           </div>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 

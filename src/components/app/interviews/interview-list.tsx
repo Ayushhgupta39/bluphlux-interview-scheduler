@@ -1,11 +1,21 @@
 import { useInterviewStore } from "@/store/interviewStore";
 import InterviewCard from "./interview-card";
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
 
 const InterviewList = () => {
   const { interviews } = useInterviewStore();
   const [filter, setFilter] = useState("");
-  const [dateFilter, setDateFilter] = useState(""); // New date filter
+  const [date, setDate] = useState<Date | undefined>(undefined);
 
   const filteredInterviews = interviews.filter((interview) => {
     const matchesSearch =
@@ -13,7 +23,7 @@ const InterviewList = () => {
       interview.interviewer.toLowerCase().includes(filter.toLowerCase());
 
     const matchesDate =
-      !dateFilter || interview.date.startsWith(dateFilter); // Check if interview date matches filter
+      !date || interview.date.startsWith(format(date, "yyyy-MM-dd"));
 
     return matchesSearch && matchesDate;
   });
@@ -21,30 +31,45 @@ const InterviewList = () => {
   return (
     <div>
       {/* Search Filter */}
-      <input
+      <Input
         type="text"
         placeholder="Search by Candidate or Interviewer"
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
-        className="w-full p-2 border rounded mb-2"
+        className="w-full p-2 mb-2"
       />
 
-      {/* Date Filter */}
-      <input
-        type="date"
-        value={dateFilter}
-        onChange={(e) => setDateFilter(e.target.value)}
-        className="w-full p-2 border rounded mb-4"
-      />
+      {/* Date Picker */}
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className="w-full mb-4 justify-start text-left font-normal"
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, "PPP") : "Pick a date"}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            initialFocus
+          />
+        </PopoverContent>
+      </Popover>
 
       {/* Interview List */}
-      {filteredInterviews.length > 0 ? (
-        filteredInterviews.map((interview) => (
-          <InterviewCard key={interview.id} interview={interview} />
-        ))
-      ) : (
-        <p>No interviews found.</p>
-      )}
+      <div className="flex gap-2 flex-wrap">
+        {filteredInterviews.length > 0 ? (
+          filteredInterviews.map((interview) => (
+            <InterviewCard key={interview.id} interview={interview} />
+          ))
+        ) : (
+          <p>No interviews found.</p>
+        )}
+      </div>
     </div>
   );
 };
