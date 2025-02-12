@@ -1,50 +1,114 @@
-# React + TypeScript + Vite
+# Interview Scheduler
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application for managing and scheduling interviews built with React, Vite, and Shadcn UI components. The application provides a clean and intuitive interface for scheduling, managing, and tracking interviews.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Core Functionality
+- **Interview Scheduling**
+  - Select from available time slots (30-minute intervals)
+  - Schedule interviews with candidate and interviewer details
+  - Choose interview type (Technical, HR, Behavioral)
+  - Automatic conflict detection for overlapping schedules
 
-## Expanding the ESLint configuration
+- **Interview Management**
+  - View all scheduled interviews in a clean dashboard
+  - Filter interviews by date, candidate, or interviewer
+  - Edit existing interview details
+  - Delete interviews with confirmation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **User Interface**
+  - Modern, responsive design using Shadcn UI
+  - Toast notifications for user actions
+  - Calendar view for date selection
+  - Intuitive time slot selection
 
-- Configure the top-level `parserOptions` property like this:
+### Technical Features
+- State management with Zustand + localStorage persistence
+- React Router for navigation
+- Form validation and error handling
+- Responsive design for all screen sizes
+- Type-safe development with TypeScript
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🛠️ Tech Stack
+
+- **Core:**
+  - React 18
+  - TypeScript
+  - Vite
+  - React Router v6
+
+- **State Management:**
+  - Zustand
+  - localStorage persistence
+
+- **UI/Styling:**
+  - Tailwind CSS
+  - Shadcn UI Components
+  - Lucide Icons
+  - date-fns for date manipulation
+
+## 📦 Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd interview-scheduler
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+2. Install dependencies:
+```bash
+npm install
 ```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+## 🏗️ Project Structure
+
+```
+src/
+├── components/          # React components
+│   ├── app/            # Application-specific components
+│   └── ui/             # Shadcn UI components
+├── pages/              # Route pages
+├── store/              # Zustand store
+├── types/              # TypeScript types
+├── utils/              # Utility functions
+└── hooks/              # Custom React hooks
+```
+
+## 🔧 Configuration
+
+The project uses several configuration files:
+- `components.json` - Shadcn UI configuration
+- `tailwind.config.js` - Tailwind CSS configuration
+- `vite.config.ts` - Vite configuration
+- `tsconfig.json` - TypeScript configuration
+
+## 📱 Usage
+
+1. **Dashboard:**
+   - View all scheduled interviews
+   - Filter interviews by date
+   - Access edit and delete functions
+
+2. **Schedule Interview:**
+   - Fill in candidate and interviewer details
+   - Select date from calendar
+   - Choose from available time slots
+   - Select interview type
+
+3. **Edit Interview:**
+   - Modify any interview details
+   - System validates for conflicts
+   - Instant updates to dashboard
+
+
+## 📄 License
+
+[MIT License](LICENSE)
