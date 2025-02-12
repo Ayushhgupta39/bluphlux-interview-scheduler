@@ -4,7 +4,6 @@ import moment from "moment";
 import { useInterviewStore } from "@/store/interviewStore";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import { EventInteractionArgs } from "react-big-calendar/lib/addons/dragAndDrop";
 import { isTimeSlotAvailable } from "@/utils/dateHelpers";
 import { toast } from "@/hooks/use-toast";
 
@@ -28,7 +27,7 @@ const InterviewCalendar = () => {
     end: moment(`${interview.date}T${interview.time}`).add(1, "hour").toDate(),
   }));
 
-  const onEventDrop = (args: EventInteractionArgs<CalendarEvent>) => {
+  const onEventDrop = (args: any) => {
     const { event, start } = args;
     const newDate = moment(start).format("YYYY-MM-DD");
     const newTime = moment(start).format("HH:mm");
