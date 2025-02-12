@@ -8,6 +8,7 @@ interface InterviewStore {
   addInterview: (interview: Interview) => void;
   deleteInterview: (id: string) => void;
   updateInterview: (updatedInterview: Interview) => void;
+  updateInterviewTime: (id: string, newDate: string, newTime: string) => void;
 }
 
 export const useInterviewStore = create<InterviewStore>()(
@@ -29,6 +30,15 @@ export const useInterviewStore = create<InterviewStore>()(
         set((state) => ({
           interviews: state.interviews.map((interview) =>
             interview.id === updatedInterview.id ? updatedInterview : interview
+          ),
+        })),
+
+      updateInterviewTime: (id, newDate, newTime) =>
+        set((state) => ({
+          interviews: state.interviews.map((interview) =>
+            interview.id === id
+              ? { ...interview, date: newDate, time: newTime }
+              : interview
           ),
         })),
     }),
