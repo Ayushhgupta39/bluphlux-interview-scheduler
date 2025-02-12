@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { format, setHours, setMinutes } from "date-fns";
+import { toast } from "@/hooks/use-toast";
 
 type EditInterviewModalProps = {
   interview: Interview;
@@ -85,6 +86,10 @@ const EditInterviewModal = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateInterview(updatedInterview);
+    toast({
+      title: "Interview Updated Successfully.",
+      description: `Please infrom the respective recipients about the updates.`,
+    });
     onClose();
   };
 

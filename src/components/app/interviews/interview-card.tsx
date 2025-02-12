@@ -22,6 +22,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "@/hooks/use-toast";
 
 type InterviewCardProps = {
   interview: Interview;
@@ -79,7 +80,13 @@ const InterviewCard = ({ interview }: InterviewCardProps) => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction className="bg-red-500" onClick={() => deleteInterview(interview.id)}>
+              <AlertDialogAction className="bg-red-500" onClick={() => {
+                deleteInterview(interview.id)
+                toast({
+                  title: "Interview Cancelled",
+                  description: `The Interview is Cancelled Successfully.`,
+                });
+              }}>
                 Cancel
               </AlertDialogAction>
             </AlertDialogFooter>
