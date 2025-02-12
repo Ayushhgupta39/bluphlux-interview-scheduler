@@ -28,19 +28,19 @@ const AvailableSlots = () => {
   const formattedDate = format(selectedDate, "yyyy-MM-dd");
 
   return (
-    <Card>
+    <Card className="w-full max-w-lg mx-auto md:max-w-2xl lg:max-w-4xl">
       <CardHeader>
-        <CardTitle>Available Time Slots</CardTitle>
+        <CardTitle className="text-lg md:text-xl">Available Time Slots</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
-          <Label className="mr-2">Select Date</Label>
+          <Label className="mr-2 text-sm md:text-base">Select Date</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 className={cn(
-                  "w-[240px] justify-start text-left font-normal",
+                  "w-full sm:w-[240px] justify-start text-left font-normal",
                   !selectedDate && "text-muted-foreground"
                 )}
               >
@@ -52,7 +52,7 @@ const AvailableSlots = () => {
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent className="w-auto p-0" align="center">
               <Calendar
                 mode="single"
                 selected={selectedDate}
@@ -66,7 +66,7 @@ const AvailableSlots = () => {
           </Popover>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {timeSlots.map((timeSlot) => {
             const { available, details } = isTimeSlotAvailable(
               formattedDate,
@@ -79,17 +79,17 @@ const AvailableSlots = () => {
                 <HoverCardTrigger asChild>
                   <div
                     className={cn(
-                      "p-4 rounded-lg border transition-colors cursor-pointer",
-                      "flex flex-col items-center justify-center space-y-2",
+                      "p-3 md:p-4 rounded-lg border transition-colors cursor-pointer",
+                      "flex flex-col items-center justify-center space-y-1 md:space-y-2",
                       available
                         ? "bg-primary/5 hover:bg-primary/10 border-primary/20"
                         : "bg-destructive/5 hover:bg-destructive/10 border-destructive/20"
                     )}
                   >
-                    <span className="font-medium">{timeSlot}</span>
+                    <span className="text-sm md:text-base font-medium">{timeSlot}</span>
                     <Badge
                       variant={available ? "secondary" : "destructive"}
-                      className="font-normal"
+                      className="text-xs md:text-sm font-normal"
                     >
                       {available ? "Available" : "Booked"}
                     </Badge>
@@ -99,10 +99,8 @@ const AvailableSlots = () => {
                 {!available && details && (
                   <HoverCardContent className="w-64">
                     <div className="space-y-2">
-                      <h4 className="text-sm font-semibold">
-                        Interview Details
-                      </h4>
-                      <div className="text-sm space-y-1">
+                      <h4 className="text-sm font-semibold">Interview Details</h4>
+                      <div className="text-xs md:text-sm space-y-1">
                         <p>Candidate: {details.candidate}</p>
                         <p>Interviewer: {details.interviewer}</p>
                         <p>Type: {details.type}</p>

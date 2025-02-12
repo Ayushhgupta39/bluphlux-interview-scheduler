@@ -11,13 +11,13 @@ const Dashboard = () => {
   const [view, setView] = useState<ViewType>("list");
 
   return (
-    <div className="p-6 space-y-6 flex gap-3">
-      <div className="w-2/3">
+    <div className="p-6 space-y-6 flex flex-col lg:flex-row gap-6">
+      <div className="w-full lg:w-2/3">
         <Tabs
           value={view}
           onValueChange={(value: string) => setView(value as ViewType)}
         >
-          <TabsList className="grid w-48 grid-cols-2">
+          <TabsList className="grid w-full sm:w-48 grid-cols-2">
             <TabsTrigger value="list" className="flex items-center gap-2">
               <List className="h-4 w-4" />
               List
@@ -37,7 +37,7 @@ const Dashboard = () => {
           </TabsContent>
         </Tabs>
       </div>
-      <div>
+      <div className="w-full lg:w-1/3">
         <AvailableSlots />
       </div>
     </div>

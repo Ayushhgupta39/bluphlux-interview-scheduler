@@ -6,7 +6,7 @@ const Navbar = () => {
   const pathname = location.pathname;
   return (
     <nav className="mb-4 p-4 border-b-2 border-gray-300 flex item-center justify-between">
-      <h1 className="text-3xl font-bold tracking-tight">Interview Dashboard</h1>
+      <h1 className="text-xl sm:text-3xl font-bold tracking-tight">Interview Dashboard</h1>
       <div>
         {pathname !== "/" && (
           <a href="/">

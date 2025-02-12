@@ -45,10 +45,7 @@ const generateTimeSlots = () => {
   return slots;
 };
 
-const EditInterviewModal = ({
-  interview,
-  onClose,
-}: EditInterviewModalProps) => {
+const EditInterviewModal = ({ interview, onClose }: EditInterviewModalProps) => {
   const { updateInterview } = useInterviewStore();
   const [updatedInterview, setUpdatedInterview] = useState({ ...interview });
   const timeSlots = generateTimeSlots();
@@ -88,19 +85,19 @@ const EditInterviewModal = ({
     updateInterview(updatedInterview);
     toast({
       title: "Interview Updated Successfully.",
-      description: `Please infrom the respective recipients about the updates.`,
+      description: `Please inform the respective recipients about the updates.`,
     });
     onClose();
   };
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-lg w-full max-w-md px-4 py-6 md:px-6">
         <DialogHeader>
-          <DialogTitle>Edit Interview</DialogTitle>
+          <DialogTitle className="text-lg md:text-xl">Edit Interview</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
+          <div className="grid gap-3">
             <Label htmlFor="candidate">Candidate Name</Label>
             <Input
               id="candidate"
@@ -111,7 +108,7 @@ const EditInterviewModal = ({
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="grid gap-3">
             <Label htmlFor="interviewer">Interviewer Name</Label>
             <Input
               id="interviewer"
@@ -122,14 +119,11 @@ const EditInterviewModal = ({
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="grid gap-3">
             <Label>Date</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start text-left font-normal"
-                >
+                <Button variant="outline" className="w-full flex items-center">
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {updatedInterview.date
                     ? format(new Date(updatedInterview.date), "PPP")
@@ -139,11 +133,7 @@ const EditInterviewModal = ({
               <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
                   mode="single"
-                  selected={
-                    updatedInterview.date
-                      ? new Date(updatedInterview.date)
-                      : undefined
-                  }
+                  selected={updatedInterview.date ? new Date(updatedInterview.date) : undefined}
                   onSelect={handleDateSelect}
                   initialFocus
                 />
@@ -151,12 +141,9 @@ const EditInterviewModal = ({
             </Popover>
           </div>
 
-          <div className="space-y-2">
+          <div className="grid gap-3">
             <Label>Time Slot</Label>
-            <Select
-              value={updatedInterview.time}
-              onValueChange={handleTimeChange}
-            >
+            <Select value={updatedInterview.time} onValueChange={handleTimeChange}>
               <SelectTrigger>
                 <SelectValue placeholder="Select time slot" />
               </SelectTrigger>
@@ -170,12 +157,9 @@ const EditInterviewModal = ({
             </Select>
           </div>
 
-          <div className="space-y-2">
+          <div className="grid gap-3">
             <Label>Interview Type</Label>
-            <Select
-              value={updatedInterview.type}
-              onValueChange={handleTypeChange}
-            >
+            <Select value={updatedInterview.type} onValueChange={handleTypeChange}>
               <SelectTrigger>
                 <SelectValue placeholder="Select interview type" />
               </SelectTrigger>
@@ -187,7 +171,7 @@ const EditInterviewModal = ({
             </Select>
           </div>
 
-          <div className="flex justify-end gap-2">
+          <div className="flex flex-wrap justify-end gap-2">
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
