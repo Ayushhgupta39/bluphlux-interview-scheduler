@@ -67,7 +67,9 @@ const InterviewList = () => {
             <InterviewCard key={interview.id} interview={interview} />
           ))
         ) : (
-          <p>No interviews found.</p>
+          <div className="w-full">
+            <p className="text-center text-lg">No interviews Scheduled. Enjoy your day!</p>
+          </div>
         )}
       </div>
     </div>
