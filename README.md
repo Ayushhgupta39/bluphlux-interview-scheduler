@@ -59,14 +59,15 @@ A modern web application for managing and scheduling interviews built with React
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd interview-scheduler
+git clone https://github.com/Ayushhgupta39/bluphlux-interview-scheduler.git
+cd bluphlux-interview-scheduler
 ```
 
 2. Install dependencies:
 ```bash
-npm install
+npm install --force
 ```
+#### Note: Please use --force flag to avoid any dependency conflicts with Reactv19.
 
 3. Start the development server:
 ```bash
