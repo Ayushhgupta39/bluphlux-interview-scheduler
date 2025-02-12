@@ -1,7 +1,7 @@
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
-import { useInterviewStore } from "@/context/InterviewContext";
+import { useInterviewStore } from "@/store/interviewStore";
 
 const localizer = momentLocalizer(moment);
 
@@ -12,7 +12,7 @@ const InterviewCalendar = () => {
     id: interview.id,
     title: `${interview.candidate} - ${interview.type}`,
     start: new Date(`${interview.date}T${interview.time}`),
-    end: new Date(`${interview.date}T${interview.time}`), // assuming 1-hour duration
+    end: new Date(`${interview.date}T${interview.time}`), // 1-hour duration
   }));
 
   return (

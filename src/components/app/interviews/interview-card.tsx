@@ -9,7 +9,7 @@ type InterviewCardProps = {
 
 const InterviewCard = ({ interview }: InterviewCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  console.log(interview)
+  console.log(interview);
   const { deleteInterview } = useInterviewStore();
 
   return (
@@ -17,7 +17,7 @@ const InterviewCard = ({ interview }: InterviewCardProps) => {
       <h3 className="text-lg font-bold">{interview.candidate}</h3>
       <p>Interviewer: {interview.interviewer}</p>
       <p>Date: {new Date(interview.date).toLocaleDateString()}</p>
-      <p>Time: {(interview.time)}</p>
+      <p>Time: {interview.time}</p>
       <p>Type: {interview.type}</p>
       <button
         onClick={() => setIsEditing(true)}
@@ -30,12 +30,13 @@ const InterviewCard = ({ interview }: InterviewCardProps) => {
           interview={interview}
           onClose={() => setIsEditing(false)}
         />
-      )} <button
-      onClick={() => deleteInterview(interview.id)}
-      className="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
-    >
-      Delete
-    </button>
+      )}{" "}
+      <button
+        onClick={() => deleteInterview(interview.id)}
+        className="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
+      >
+        Delete
+      </button>
     </div>
   );
 };

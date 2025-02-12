@@ -1,4 +1,4 @@
-import { useInterviewStore } from "@/context/InterviewContext";
+import { useInterviewStore } from "@/store/interviewStore";
 import InterviewCard from "./interview-card";
 import { useState } from "react";
 

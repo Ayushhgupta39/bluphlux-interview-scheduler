@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
-import { useInterviewStore } from "@/context/InterviewContext";
+import { useInterviewStore } from "@/store/interviewStore";
 import { Interview } from "@/types/types";
 import { validateConflict } from "@/utils/validations";
 

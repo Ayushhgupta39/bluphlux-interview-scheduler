@@ -1,5 +1,3 @@
-// utils/dateHelpers.ts
-
 import { Interview } from "@/types/types";
 
 export const generateTimeSlots = () => {
