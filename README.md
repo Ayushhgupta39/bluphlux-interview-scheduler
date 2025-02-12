@@ -16,6 +16,10 @@ A modern web application for managing and scheduling interviews built with React
   - Filter interviews by date, candidate, or interviewer
   - Edit existing interview details
   - Delete interviews with confirmation
+  
+- **Drag and Drop Scheduling**
+  - Easily reschedule interviews by dragging and dropping time slots using `react-beautiful-dnd`
+  - Smooth animations for a seamless experience
 
 - **User Interface**
   - Modern, responsive design using Shadcn UI
@@ -47,6 +51,9 @@ A modern web application for managing and scheduling interviews built with React
   - Shadcn UI Components
   - Lucide Icons
   - date-fns for date manipulation
+
+- **Drag and Drop:**
+  - react-beautiful-dnd
 
 ## 📦 Installation
 
@@ -108,6 +115,10 @@ The project uses several configuration files:
    - System validates for conflicts
    - Instant updates to dashboard
 
+4. **Drag and Drop Scheduling:**
+   - Drag interviews to a new time slot
+   - Automatically updates interview details
+   - Ensures no conflicts after the move
 
 ## 📄 License
 

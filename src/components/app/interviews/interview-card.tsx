@@ -87,7 +87,7 @@ const InterviewCard = ({ interview }: InterviewCardProps) => {
                   description: `The Interview is Cancelled Successfully.`,
                 });
               }}>
-                Cancel
+                Delete
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
